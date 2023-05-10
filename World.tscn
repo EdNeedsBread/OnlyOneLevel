@@ -1,0 +1,109 @@
+[gd_scene load_steps=13 format=3 uid="uid://cgfirqdi8oynm"]
+
+[ext_resource type="PackedScene" uid="uid://dw3ursu28k45q" path="res://Player/Player.tscn" id="1_uu2wq"]
+[ext_resource type="Shader" uid="uid://ddec0rsxojgp0" path="res://pixelation.tres" id="3_8or3p"]
+[ext_resource type="Texture2D" uid="uid://yxauwl3begut" path="res://icon.svg" id="4_hegtg"]
+[ext_resource type="PackedScene" uid="uid://86yv5757r7w5" path="res://Objects/Hazards/SpikeMat.tscn" id="4_sdar4"]
+[ext_resource type="PackedScene" uid="uid://crfcb34w8xggp" path="res://Objects/Crate.tscn" id="5_ggc1s"]
+[ext_resource type="PackedScene" uid="uid://dfjxtrsurgvsj" path="res://Objects/TheDoor.tscn" id="6_4xqco"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_fr0do"]
+uv2_padding = 1.6
+size = Vector3(10, 0.1, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qvrom"]
+size = Vector3(10, 0.1, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7yceq"]
+uv2_padding = 1.6
+size = Vector3(100, 0.1, 50)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4hfwj"]
+size = Vector3(100, 0.1, 50)
+
+[sub_resource type="Environment" id="Environment_duh58"]
+background_mode = 1
+background_color = Color(0.705882, 0.823529, 0.92549, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3o0qe"]
+shader = ExtResource("3_8or3p")
+shader_parameter/Pixelisation = 380.0
+
+[node name="World" type="Node3D"]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.79975, 5.79571, 21.3488)
+use_collision = true
+size = Vector3(106.561, 12.482, 1)
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.616239, -0.787559, 0, 0.787559, 0.616239, -4.68378, 3.12586, -4.96591)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21805, 0)
+mesh = SubResource("BoxMesh_fr0do")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
+shape = SubResource("BoxShape3D_qvrom")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.21805, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21805, 0)
+mesh = SubResource("BoxMesh_7yceq")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_4hfwj")
+
+[node name="Player" parent="." instance=ExtResource("1_uu2wq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.88651, 2.72686, 3.3211)
+sprint_speed = 2.0
+jump_height = 3.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_duh58")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.327267, 0.944932, 0, -0.944932, 0.327267, -8.93577, 13.8195, 9.13838)
+light_color = Color(0.137255, 0.34902, 0.737255, 1)
+light_energy = 1.61
+light_indirect_energy = 1.152
+light_volumetric_fog_energy = 1.003
+shadow_enabled = true
+shadow_bias = 0.908
+shadow_opacity = 0.85
+
+[node name="Shader" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_3o0qe")
+position = Vector2(964.5, 547.5)
+scale = Vector2(15.0547, 8.53906)
+texture = ExtResource("4_hegtg")
+
+[node name="SpikeMat" parent="." instance=ExtResource("4_sdar4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.4663, -0.0015378, 9.69913)
+
+[node name="SpikeMat2" parent="." instance=ExtResource("4_sdar4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.4663, -0.0015378, 9.69913)
+
+[node name="SpikeMat4" parent="." instance=ExtResource("4_sdar4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.4663, -0.0015378, 9.69913)
+
+[node name="SpikeMat3" parent="." instance=ExtResource("4_sdar4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.4663, -0.0015378, 9.69913)
+
+[node name="Crateboxes" type="Node3D" parent="."]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -7.15185, 1.83195, 8.97318)
+
+[node name="Crate" parent="Crateboxes" instance=ExtResource("5_ggc1s")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Crate2" parent="Crateboxes" instance=ExtResource("5_ggc1s")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
+
+[node name="Crate3" parent="Crateboxes" instance=ExtResource("5_ggc1s")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1, 0)
+
+[node name="TheDoor" parent="." instance=ExtResource("6_4xqco")]
+transform = Transform3D(-2.18557e-07, 0, -5, 0, 5, 0, 5, 0, -2.18557e-07, -40.4357, -0.168051, 8.08252)

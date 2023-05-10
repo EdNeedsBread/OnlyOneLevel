@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://oxtnbs7wnnvj"]
+
+[ext_resource type="Script" path="res://Objects/Hazards/Spike.gd" id="1_8xj35"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u54h1"]
+size = Vector3(0.24, 0.4, 0.24)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mfe42"]
+albedo_color = Color(0.419608, 0.207843, 0.109804, 1)
+
+[sub_resource type="Curve" id="Curve_ub5co"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.290323, 0.0090909), 0.0, 0.0, 0, 0, Vector2(0.989247, 0.0272727), 0.0, 0.0, 0, 0, Vector2(1, 0.0454545), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_aaein"]
+radius = 2.48
+radial_steps = 4
+section_length = 0.15
+curve = SubResource("Curve_ub5co")
+
+[node name="Spike" type="Node3D"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+script = ExtResource("1_8xj35")
+
+[node name="Tip" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.424675, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Tip"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0596197, 0)
+shape = SubResource("BoxShape3D_u54h1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.177199, 0)
+material_override = SubResource("StandardMaterial3D_mfe42")
+mesh = SubResource("TubeTrailMesh_aaein")
+
+[connection signal="area_entered" from="Tip" to="." method="_on_tip_area_entered"]

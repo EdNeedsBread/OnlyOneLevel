@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://crfcb34w8xggp"]
+
+[ext_resource type="Texture2D" uid="uid://vfm1cp0bwpke" path="res://Art/crate_texture.png" id="1_5y8kp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mdr3i"]
+albedo_texture = ExtResource("1_5y8kp")
+uv1_scale = Vector3(3, 2, 1)
+uv1_offset = Vector3(0, 0.005, 0)
+uv1_triplanar_sharpness = 1.36604
+texture_filter = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_dgr03"]
+lightmap_size_hint = Vector2i(14, 21)
+material = SubResource("StandardMaterial3D_mdr3i")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_q6v3k"]
+
+[node name="Crate" type="StaticBody3D"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_dgr03")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_q6v3k")

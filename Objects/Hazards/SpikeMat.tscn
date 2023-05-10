@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://86yv5757r7w5"]
+
+[ext_resource type="PackedScene" uid="uid://oxtnbs7wnnvj" path="res://Objects/Hazards/Spike.tscn" id="1_api0s"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2ove2"]
+size = Vector3(4, 0.5, 8)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nvkps"]
+albedo_color = Color(0.431373, 0, 0.0784314, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_25e26"]
+material = SubResource("StandardMaterial3D_nvkps")
+size = Vector3(4, 0.2, 8)
+
+[node name="SpikeMat" type="StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.168233, 0)
+shape = SubResource("BoxShape3D_2ove2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_25e26")
+
+[node name="Spike" parent="." instance=ExtResource("1_api0s")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -0.0313841, 1.09753, 2.08156)
+
+[node name="Spike2" parent="." instance=ExtResource("1_api0s")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -0.0313841, 1.09753, -2.24767)
+
+[node name="Spike3" parent="." instance=ExtResource("1_api0s")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -0.0313841, 1.09753, -0.0271025)

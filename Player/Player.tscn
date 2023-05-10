@@ -1,0 +1,69 @@
+[gd_scene load_steps=8 format=3 uid="uid://dw3ursu28k45q"]
+
+[ext_resource type="Script" path="res://Player/playerControls.gd" id="1_krikc"]
+[ext_resource type="Script" path="res://Player/GroundCheck.gd" id="2_xnct7"]
+[ext_resource type="PackedScene" uid="uid://c6y2jmn6rylx6" path="res://Components/health_component.tscn" id="3_rrgq8"]
+[ext_resource type="PackedScene" uid="uid://b11uvronp2cjk" path="res://Components/hitbox_component.tscn" id="4_cxglp"]
+
+[sub_resource type="CylinderShape3D" id="5"]
+
+[sub_resource type="CapsuleMesh" id="2"]
+height = 3.0
+
+[sub_resource type="CapsuleShape3D" id="4"]
+height = 3.0
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_krikc")
+sprint_speed = 2.9
+jump_height = 2.7
+
+[node name="Foot" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.50347, 0)
+shape = SubResource("5")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.16689, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+current = true
+fov = 86.0
+far = 805.4
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Head/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 1.74846e-07, 0, -1.74846e-07, 1, 0, -1.16689, 0)
+mesh = SubResource("2")
+skeleton = NodePath("../../..")
+
+[node name="Hand" type="Node3D" parent="Head/Camera3D"]
+transform = Transform3D(0.939866, 0, 0.341544, 0, 1, 0, -0.341544, 0, 0.939866, 0.921137, -0.664271, -1.01315)
+
+[node name="InteractCheck" type="RayCast3D" parent="Head/Camera3D" groups=["Interact"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 5.5282, 0.00976793, 0.0134497, -0.93889)
+target_position = Vector3(0, 0, -1)
+collision_mask = 512
+collide_with_areas = true
+debug_shape_custom_color = Color(0.270588, 0.517647, 0.419608, 1)
+debug_shape_thickness = 3
+
+[node name="GroundCheck" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
+target_position = Vector3(0, -1.5, 0)
+script = ExtResource("2_xnct7")
+
+[node name="FootstepTimer" type="Timer" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="JumpAudio" type="AudioStreamPlayer2D" parent="."]
+volume_db = -14.377
+
+[node name="HealthComponent" parent="." instance=ExtResource("3_rrgq8")]
+MAX_HEALTH = 5.0
+
+[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("4_cxglp")]
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitboxComponent"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00302196, 0, -0.0164838)
+shape = SubResource("4")
